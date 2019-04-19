@@ -1,0 +1,17 @@
+<IfModule !mod_rewrite.c>
+    Error "mod_rewrite is required. Load it with LoadModule"
+</IfModule>
+<IfModule mod_rewrite.c>
+    # Active rewrite engine
+	RewriteEngine on
+
+    # The server must follow symbolic links :
+    Options +FollowSymlinks
+
+    ## Prevent access to these directory
+    RewriteRule ^(export|log|services|utils) - [R=404,L]
+
+    # Rule for rewriting with php router
+    RewriteCond %{REQUEST_URI} !nothing_to_see_here.gif$
+    RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+</IfModule>
